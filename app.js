@@ -1,13 +1,21 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors'),
+      express = require('express'),
+      path = require('path'),
+      cookieParser = require('cookie-parser'),
+      logger = require('morgan'),
+      bodyParser = require('body-parser');
+      app = express();
+      
+/* Models*/
+const {House} = require('./models/house'),
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+/* Initialise a DB Connection */
+      {mongoose} = require('./db/mongoose');
 
-var app = express();
+/* Routes */
+const indexRouter = require('./routes/index'),
+      usersRouter = require('./routes/users'),
+      housesRouter = require('./routes/houses');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -17,6 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 
 app.use('/', indexRouter);
 app.use('/houses', housesRouter)
