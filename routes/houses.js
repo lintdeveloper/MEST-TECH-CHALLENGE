@@ -4,19 +4,12 @@ const express = require('express'),
       multipartMiddleware = multipart(),
       cloudinary = require('cloudinary');
 
-/* Setup Cloudinary Configuration */
-cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: processe.env.API_SECRET
-});
-
 /* Models */
-const { House } = require('./models/house');
+const { House } = require('../models/house');
 
 /* GET /houses */
 router.get('/', function (req, res) {
-    res.send("Welcome to the house");
+    res.render('houses/index')
 });
 
 /** POST /houses */
