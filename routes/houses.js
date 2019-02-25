@@ -9,7 +9,9 @@ const { House } = require('../models/house');
 
 /* GET /houses */
 router.get('/', function (req, res) {
-    res.render('houses/index')
+    House.find().then((houses)=>{
+        res.json(houses)
+    });
 });
 
 /** GET /houses/new  */
@@ -34,7 +36,7 @@ router.post('/', multipartMiddleware, (req, res)=>{
 
             house.save().then((doc) => {
                 console.log(doc);
-                res.redirect('/houses')                
+                res.redirect('/houses');                
             }, (e) => {
                 res.status(400).send(e);
             });
