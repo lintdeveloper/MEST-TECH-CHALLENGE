@@ -19,6 +19,13 @@ router.get("/new", (req, res)=>{
     res.render('houses/new');
 });
 
+/** GET /houses/:id */
+router.get('/:id', (req, res)=>{
+    House.findById(req.params.id).then((vehicle)=>{
+        res.json(vehicle)
+    })
+})
+
 /** POST /houses */
 router.post('/', multipartMiddleware, (req, res)=>{
     let picturePath = req.files.picture.path;
