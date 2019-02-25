@@ -21,10 +21,28 @@ router.get("/new", (req, res)=>{
 
 /** GET /houses/:id */
 router.get('/:id', (req, res)=>{
-    House.findById(req.params.id).then((vehicle)=>{
-        res.json(vehicle)
+    House.findById(req.params.id).then((house)=>{
+        res.json(house)
     })
-})
+});
+
+/** GET /houses/update */
+router.get('/:id/update', (req, res)=>{
+    House.findById(req.params.id).then((house)=>{
+        console.log(house);
+        res.render('houses/update',{house: house})
+    });
+});
+
+/** PUT /houses/:id */
+// router.put('/:id', (req, res)=>{
+//     House.findByIdAndUpdate(req.params.id, req.body.house).then((house)=>{
+//         res.redirect('/houses/'+ req.params.id);
+//     });
+// });
+
+/** DELETE /houses/:id */
+
 
 /** POST /houses */
 router.post('/', multipartMiddleware, (req, res)=>{
