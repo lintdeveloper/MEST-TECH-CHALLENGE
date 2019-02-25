@@ -12,10 +12,15 @@ router.get('/', function (req, res) {
     res.render('houses/index')
 });
 
+/** GET /houses/new  */
+router.get("/new", (req, res)=>{
+    res.render('houses/new');
+});
+
 /** POST /houses */
 router.post('/', multipartMiddleware, (req, res)=>{
     let picturePath = req.files.picture.path;
-    cloudinary.v2.upload(picturePath, { width: 300, height: 300, crop: "limit", tags: req.body.tags, moderation: "manual", timeout: 60000 }, (err, result)=>{
+    cloudinary.v2.uploader.upload(picturePath, { width: 300, height: 300, crop: "limit", tags: req.body.tags, moderation: "manual", timeout: 60000 }, (err, result)=>{
             if (err) {
                 console.log(err);
             }
@@ -28,7 +33,8 @@ router.post('/', multipartMiddleware, (req, res)=>{
             });
 
             house.save().then((doc) => {
-                res.send(doc);
+                console.log(doc);
+                res.redirect('/houses')                
             }, (e) => {
                 res.status(400).send(e);
             });
