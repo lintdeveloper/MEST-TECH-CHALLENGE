@@ -10,7 +10,8 @@ const createError = require('http-errors'),
       methodOverride = require('method-override'),
       passport = require('passport'),
       flash = require('connect-flash'),
-      session = require('express-session');
+      session = require('express-session'), 
+      { ensureAuthenticated } = require('./config/auth');
       app = express();
 
 
@@ -71,13 +72,8 @@ app.use(methodOverride('_method'))
 
 /**Routes */
 app.use('/', indexRouter);
-app.use('/houses/', housesRouter)
+app.use('/houses/', ensureAuthenticated, housesRouter)
 app.use('/users', usersRouter);
-
-// TEST DASHBOARD
-app.use('/dashboard', (req, res)=>{
-  res.send("You are now logged to the dashboard")
-});
 
 app.listen(port, (req, res) => {
   console.log(`Started up on port ${port}`);
