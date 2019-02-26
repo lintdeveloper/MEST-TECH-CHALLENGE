@@ -4,6 +4,10 @@ const express = require('express'),
       passport = require('passport'),
       User = require('../models/user');
 
+router.get('/register', (req, res)=>{
+  res.render('user/register');
+})
+
 router.post('/register', (req, res) => {
   const { email, password, password2 } = req.body;
   let errors = [];
@@ -54,9 +58,7 @@ router.post('/register', (req, res) => {
                   'success_msg',
                   'You are now registered and can log in'
                 );
-                console.log(user);
-                
-                // res.redirect('/login');
+                res.redirect('users/login');
               })
               .catch(err => console.log(err));
           });
@@ -73,8 +75,8 @@ router.get('/login', (req, res)=>{
 //Login
 router.post('/login', (req, res, next) =>{
   passport.authenticate('local', {
-    successRedirect: 'users/dashboard',
-    failureRedirect: 'users/login',
+    successRedirect: 'dashboard',
+    failureRedirect: 'login',
     failureFlash: true
   })(req, res, next);
 }) 
