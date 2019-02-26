@@ -35,13 +35,33 @@ router.get('/:id/update', (req, res)=>{
 });
 
 /** PUT /houses/:id */
-// router.put('/:id', (req, res)=>{
-//     House.findByIdAndUpdate(req.params.id, req.body.house).then((house)=>{
-//         res.redirect('/houses/'+ req.params.id);
-//     });
-// });
+router.put('/:id', (req, res)=>{
+    cloudinary.v2.uploader.rename(oldName, newName,
+        (error, result) => {
+            if (error) res.send(error);
+            House.findOneAndUpdate({ image_id: oldName },
+                Object.assign({}, req.body, { image: result.url }),
+                function (err) {
+                    if (err) res.send(err);
+
+                    res.redirect('/');
+                })
+        })
+});
+
+/** GET /houses */
 
 /** DELETE /houses/:id */
+router.post('/delete', (req, res)=>{
+    var imageId = req.body.image_id;
+    cloudinary.v2.uploader.destroy(imageId, function (error, result) {
+        Model.findOneAndRemove({ image_id: imageId }, function (err) {
+            if (err) res.send(err);
+
+            res.redirect('/');
+        });
+    });
+});
 
 
 /** POST /houses */

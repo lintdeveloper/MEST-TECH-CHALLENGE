@@ -6,12 +6,39 @@ const createError = require('http-errors'),
       logger = require('morgan'),
       bodyParser = require('body-parser'),
       layout = require('express-layout'),
-      cloudinary = require('cloudinary');
+      cloudinary = require('cloudinary'),
+      methodOverride = require('method-override'),
+      passport = require('passport'),
+      flash = require('connect-flash'),
+      session = require('express-session');
       app = express();
+
+
+// Express session
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+  })
+);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Connect flash
+app.use(flash());
+
 
 const indexRouter = require('./routes/index'),
       usersRouter = require('./routes/users'),
       housesRouter = require('./routes/houses');
+
+
+/** Passport Config */
+require('./config/passport')(passport)
+
 
 /* Setup Cloudinary Configuration */
 cloudinary.config({
@@ -40,12 +67,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
+app.use(methodOverride('_method'))
 
 /**Routes */
 app.use('/', indexRouter);
 app.use('/houses/', housesRouter)
 app.use('/users', usersRouter);
-
 
 app.listen(port, (req, res) => {
   console.log(`Started up on port ${port}`);
