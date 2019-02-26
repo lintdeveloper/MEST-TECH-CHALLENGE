@@ -2,7 +2,8 @@ const express = require('express'),
       router = express.Router(),
       multipart = require('connect-multiparty'),
       multipartMiddleware = multipart(),
-      cloudinary = require('cloudinary');
+      cloudinary = require('cloudinary'),
+      {ensureAuthenticated} = require('../config/auth');;
 
 /* Models */
 const { House } = require('../models/house');
@@ -65,7 +66,7 @@ router.post('/delete', (req, res)=>{
 
 
 /** POST /houses */
-router.post('/', multipartMiddleware, (req, res)=>{
+router.post('/', multipartMiddleware, ensureAuthenticated, (req, res)=>{
     let picturePath = req.files.picture.path;
     cloudinary.v2.uploader.upload(picturePath, { width: 300, height: 300, crop: "limit", tags: req.body.tags, moderation: "manual", timeout: 60000 }, (err, result)=>{
             if (err) {
@@ -75,6 +76,10 @@ router.post('/', multipartMiddleware, (req, res)=>{
             let house = new House({
                 item_name: req.body.item_name,
                 description: req.body.description,
+                author: {
+                    id: req.user._id,
+                    usermail: req.user.email
+                },
                 price: req.body.price,
                 picture: result.url
             });

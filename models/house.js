@@ -24,6 +24,13 @@ const HouseSchema = new Schema({
         required: true,
         minlength: 1,
         trim: true
+    }, 
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        usermail: String
     }
 });
 
