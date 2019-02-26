@@ -74,6 +74,11 @@ app.use('/', indexRouter);
 app.use('/houses/', housesRouter)
 app.use('/users', usersRouter);
 
+// TEST DASHBOARD
+app.use('/dashboard', (req, res)=>{
+  res.send("You are now logged to the dashboard")
+});
+
 app.listen(port, (req, res) => {
   console.log(`Started up on port ${port}`);
 })
