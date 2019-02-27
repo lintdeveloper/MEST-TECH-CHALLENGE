@@ -10,7 +10,8 @@ const createError = require('http-errors'),
       methodOverride = require('method-override'),
       passport = require('passport'),
       flash = require('connect-flash'),
-      session = require('express-session'), 
+      session = require('express-session'),
+      MongoStore = require('connect-mongo')(session), 
       { ensureAuthenticated } = require('./config/auth');
       app = express();
 
@@ -20,7 +21,9 @@ app.use(
   session({
     secret: 'secret',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: false,
+    store: new MongoStore({mongooseConnection: mongoose.connection}),
+    cookie: {maxAge: 20 * 60 * 1000} //20 seconds
   })
 );
 
@@ -68,7 +71,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+})
 
 /**Routes */
 app.use('/', indexRouter);
