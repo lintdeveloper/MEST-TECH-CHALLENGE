@@ -1,6 +1,26 @@
-<% include ../partials/nav %>
-<form action="/users/login" method="POST" style="margin-top:90px">
-    <input type="email" name="email" placeholder="Enter email">
-    <input type="passoword" name="password" placeholder="Enter password">
-    <button type="submit">Submit</button>
+<!-- Navigation -->
+<nav class="white">
+    <div class="nav-wrapper container">
+        <a href="/" class="brand-logo left">
+            <i class="hide-on-small-only left ion ion-arrow-shrink" style="color: turquoise"></i> Byarent
+        </a>
+        <ul class="right">
+            <li><a href="/showcase" class="waves-effect">Browse homes</a></li>
+            <li><a href="/login" class="hide-on-small-only waves-effect" style="color:#2fb8ad">Login</a></li>
+            <li><a href="/register" class="hide-on-small-only btn waves-effect waves-light turquoise "
+                    style="border-radius: 12px">Get Started</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<form action="/login" method="POST" style="width: 350px; margin: 0 auto; margin-top: 120px">
+    <div>
+        <input type="email" name="email" placeholder="Enter email">
+    </div>
+    <div>
+        <input type="password" name="password" placeholder="Enter password">
+    </div>
+    <button type="submit" class="btn waves-light turquoise "
+        style="border-radius: 12px; margin: 0 auto; text-align: center">Submit</button>
 </form>

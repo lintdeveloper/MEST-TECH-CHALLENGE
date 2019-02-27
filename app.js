@@ -12,6 +12,9 @@ const createError = require('http-errors'),
       flash = require('connect-flash'),
       session = require('express-session'),
       MongoStore = require('connect-mongo')(session), 
+      /* Initialise a DB Connection */
+      { mongoose } = require('./db/mongoose'),
+
       { ensureAuthenticated } = require('./config/auth');
       app = express();
 
@@ -53,10 +56,7 @@ cloudinary.config({
 const port = process.env.PORT;
 
 /* Models*/
-const {House} = require('./models/house'),
-
-/* Initialise a DB Connection */
-    {mongoose} = require('./db/mongoose');
+const {House} = require('./models/house');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -80,7 +80,7 @@ app.use((req, res, next) => {
 /**Routes */
 app.use('/', indexRouter);
 app.use('/houses/', ensureAuthenticated, housesRouter)
-app.use('/users', usersRouter);
+app.use('/', usersRouter);
 
 app.listen(port, (req, res) => {
   console.log(`Started up on port ${port}`);
