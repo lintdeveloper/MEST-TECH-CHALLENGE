@@ -4,14 +4,17 @@
             <i class="left ion ion-arrow-shrink" style="color: turquoise"></i> Byarent
         </a>
         <ul class="right">
-            <li><a href="/homes" class="hide-on-small-only waves-effect">Browse homes</a></li>
-            <li><a href="/login" class="waves-effect" style="color:#2fb8ad">Login</a></li>
-            <li><a href="/register" class="btn waves-effect waves-light turquoise " style="border-radius: 12px">Get
-                    Started</a></li>
+            <li><a href="/houses" class="hide-on-small-only waves-effect">Browse homes</a></li>
+            <li><a href="/cart" class="btn hide-on-small-only waves-effect"><span style="color:turquoise">
+                        MY CART
+                        <%if(typeof session.cart === "undefined"){ %>
+                        0
+                        <%} else {%>
+                        <%= session.cart.totalQty %>
+                        <%}%>
+                        </a>
+            </li>
+            <li><a href="/logout" class="waves-effect" style="color:#2fb8ad">Logout</a></li>
         </ul>
     </div>
 </nav>
-
-
-<h4>You are all welcome to the dashboard</h4>
-<a href="/logout">Logout</a>

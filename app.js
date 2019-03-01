@@ -14,7 +14,6 @@ const createError = require('http-errors'),
       MongoStore = require('connect-mongo')(session), 
       /* Initialise a DB Connection */
       { mongoose } = require('./db/mongoose'),
-
       { ensureAuthenticated } = require('./config/auth');
       app = express();
 
@@ -36,7 +35,6 @@ app.use(passport.session());
 
 // Connect flash
 app.use(flash());
-
 
 const indexRouter = require('./routes/index'),
       usersRouter = require('./routes/users'),
@@ -72,8 +70,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
+
 app.use((req, res, next) => {
   res.locals.session = req.session;
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
   next();
 })
 

@@ -11,7 +11,7 @@ const { House } = require('../models/house');
 /* GET /houses */
 router.get('/', function (req, res) {
     House.find().then((houses)=>{
-        res.json(houses)
+        res.render("houses/index", {houses: houses, user: req.user});
     });
 });
 

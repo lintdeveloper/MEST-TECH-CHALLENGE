@@ -10,6 +10,15 @@ body{
     -webkit-font-smoothing: antialiased;
 }
 
+.icon_style{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+    color: white;
+    cursor:pointer; 
+}
+
 h1 {
     display: block
 }

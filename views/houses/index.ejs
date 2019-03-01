@@ -1,14 +1,58 @@
-<div>
-    <div class="form-group">
-        <input type="text" name="item_name" class="form-control">
+<nav class="white">
+    <div class="nav-wrapper container">
+        <a href="/" class="brand-logo left">
+            <i class="left ion ion-arrow-shrink" style="color: turquoise"></i> Byarent
+        </a>
+        <ul class="right">
+            <li><a href="/dashboard" class="hide-on-small-only waves-effect">Dashboard</a></li>
+            <li><a href="/cart" class="btn hide-on-small-only waves-effect"><span style="color:turquoise">
+                MY CART 
+                <%if(typeof session.cart === "undefined"){ %>
+                    0
+                <%} else {%>
+                    <%= session.cart.totalQty %>
+                <%}%>
+            </a></li>
+            <li><a href="/logout" class="waves-effect" style="color:#2fb8ad">Logout</a></li>
+        </ul>
     </div>
-    <div class="form-group">
-        <input type="text" name="description" class="form-control">
+</nav>
+
+<div class="row">
+<% houses.forEach((house)=>{ %>
+    <div class="col s6 m3 eq5 frik">
+        <div class="card sticky-action">
+            <div class="card-image">
+                <div class="overlay waves-effect waves-light">
+                   <a href="#">
+                        <img src="<%= house.picture %>">
+                        <span class="card-title amber-text text-darken-3">
+                            <i class="icon ion-android-star"></i>
+                            <i class="icon ion-android-star"></i>
+                            <i class="icon ion-android-star"></i>
+                            <i class="icon ion-android-star-half"></i>
+                            <i class="icon ion-android-star-outline"></i>
+                        </span>
+                   </a>
+                </div>
+            </div>
+            <div class="card-content">
+                <p>Description</p>
+                <span class="card-title activator grey-text text-darken-4" style="margin-top:30px">
+                    <i class="icon ion-android-more-vertical right" style="padding-top:20px"></i></span>
+                <!--<p><a href="#">This is a link</a></p>-->
+            </div>
+            <div class="card-action">
+                <a href="/add-to-cart/<%= house._id %>" class="like waves-effect pink-text text-darken-2"><i
+                        class="icon ion-android-favorite left"></i></a>
+                <span class="right">Starting at <b>₦<%= house.price %></b></span>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Description<i
+                        class="icon ion-ios-close-outline right"></i></span>
+                <p><%= house.description %></p>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <input type="number" name="price" class="form-control">
-    </div>
-    <div class="form-group">
-        <input type="file" class="form-control" name="picture" accept="image/*" required>
-    </div>
+<% }) %>
 </div>

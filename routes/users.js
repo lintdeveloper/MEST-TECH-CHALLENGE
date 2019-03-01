@@ -90,6 +90,7 @@ router.get('/logout', (req, res)=>{
 })
 
 router.get('/dashboard', ensureAuthenticated, (req, res)=>{
-  res.render('user/dashboard');
+    const user = req.user;
+    return res.render('user/dashboard', {user: user});
 })
 module.exports = router;
