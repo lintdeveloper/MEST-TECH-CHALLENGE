@@ -1,0 +1,59 @@
+<nav class="white">
+    <div class="nav-wrapper container">
+        <a href="/" class="brand-logo left">
+            <i class="left ion ion-arrow-shrink" style="color: turquoise"></i> Byarent
+        </a>
+        <ul class="right">
+            <li><a href="/dashboard" class="hide-on-small-only waves-effect">Dashboard</a></li>
+            <li><a href="/logout" class="waves-effect" style="color:#2fb8ad">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container" style="padding: 10%">
+    <div class="row" style="text-align: center">
+        <h4>Checkout</h4>
+        <p>Total: <%= total %></p>
+    </div>
+    <form action="/checkout" method="post" >
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <input type="text" name="address" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="card-name">Card Holder Name</label>
+            <input type="text" id="card-name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="card-number">Credit Card Number</label>
+            <input type="text" id="card-number" class="form-control" required>
+        </div>
+        <div>
+            <div class="row">
+                <div class="col s6">
+                    <div class="form-group">
+                        <label for="card-expiry-month">Expiration Month</label>
+                        <input type="text" id="card-expiry-month" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col s6">
+                    <div class="form-group">
+                        <label for="card-expiry-year">Expiration Year</label>
+                        <input type="text" id="card-expiry-year" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="form-group">
+                <label for="card-cvc">CVC</label>
+                <input type="text" id="card-cvc" class="form-control" required>
+            </div>
+        </div>
+        <button>Buy Now</button>
+    </form>
+</div>

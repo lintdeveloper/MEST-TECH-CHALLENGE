@@ -18,7 +18,6 @@ router.get('/cart', (req, res)=>{
     }
     
     var cart = new Cart(req.session.cart.items);
-    console.log(cart.generateArray());
     res.render('cart', { houses: cart.generateArray(), totalPrice: cart.totalPrice });
 })
 
@@ -36,5 +35,20 @@ router.get('/add-to-cart/:id', function (req, res) {
 });
 
 // Checkout 
+router.get('/checkout', (req, res)=>{
+    if(!req.session.cart){
+        return res.redirect('cart')
+    };
+    var cart = new Cart(req.session.cart.items);
 
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    let price = numberWithCommas(cart.totalPrice);
+    let totalPrice = price.concat('.00');
+
+
+    res.render('checkout', {total: totalPrice})
+});
 module.exports = router;
