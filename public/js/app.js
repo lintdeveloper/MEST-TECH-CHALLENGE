@@ -16,4 +16,8 @@ $(document).ready(function() {
         $("#alert_box").fadeOut("slow", function () {
         });
     });
+    $(document).ready(function () {
+        $('select').formSelect();
+    });
+    $('.dropdown-trigger').dropdown();
 });

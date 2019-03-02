@@ -13,8 +13,13 @@ router.get('/', (req, res) => {
 
 // GET /cart
 router.get('/cart', (req, res)=>{
-    console.log(req.session.cart);
-    res.render('cart');
+    if(!req.session.cart){
+        return res.render('cart', { houses: null });
+    }
+    
+    var cart = new Cart(req.session.cart.items);
+    console.log(cart.generateArray());
+    res.render('cart', { houses: cart.generateArray(), totalPrice: cart.totalPrice });
 })
 
 // Adds Item to Shopping Cart
@@ -29,5 +34,7 @@ router.get('/add-to-cart/:id', function (req, res) {
         res.redirect('/houses');
     });
 });
+
+// Checkout 
 
 module.exports = router;
