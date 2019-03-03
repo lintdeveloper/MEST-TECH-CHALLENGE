@@ -54,12 +54,11 @@ router.put('/:id', (req, res)=>{
 
 /** DELETE /houses/:id */
 router.post('/delete', (req, res)=>{
-    var imageId = req.body.image_id;
-    cloudinary.v2.uploader.destroy(imageId, function (error, result) {
-        Model.findOneAndRemove({ image_id: imageId }, function (err) {
+    let pictureId = req.body.picture_id;
+    cloudinary.v2.uploader.destroy(pictureId, (error, result) => {
+        House.findOneAndDelete({ picture_id: pictureId }, (err) => {
             if (err) res.send(err);
-
-            res.redirect('/');
+            res.redirect('/dashboard');
         });
     });
 });
