@@ -4,17 +4,53 @@
             <i class="left ion ion-arrow-shrink" style="color: turquoise"></i> Byarent
         </a>
         <ul class="right">
-            <li><a href="/houses" class="hide-on-small-only waves-effect">Browse homes</a></li>
-            <li><a href="/cart" class="btn hide-on-small-only waves-effect"><span style="color:turquoise">
-                        MY CART
-                        <%if(typeof session.cart === "undefined"){ %>
-                        0
-                        <%} else {%>
-                        <%= session.cart.totalQty %>
-                        <%}%>
-                        </a>
-            </li>
+            <% if((user.email === "musa@gmail.com")){ %>
+               
+            <% } else { %>
+                <li><a href="/houses" class="hide-on-small-only waves-effect">Browse homes</a></li>
+                <li><a href="/cart" class="btn hide-on-small-only waves-effect"><span style="color:turquoise">
+                        MY CART 
+                        <% if(typeof session.cart === "undefined"){ %>
+                            0
+                        <% } else {%>
+                            <%= session.cart.totalQty %>
+                        <% }%>
+                    </a>
+                </li>
+            <%}%>
+            
             <li><a href="/logout" class="waves-effect" style="color:#2fb8ad">Logout</a></li>
         </ul>
     </div>
 </nav>
+
+<div style='padding-left:10%; padding-right: 10%'>
+
+    <% if((user.email === "musa@gmail.com")){ %>
+        <table class="highlight centered" style="margin-top: 30px">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Picture</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                <% houses.forEach((house)=>{ %>
+                    <tr>
+                        <td><%= house.item_name %></td>
+                        <td><img src="<%= house.picture %>" alt="house_image"  style="height:40%; width: 30%; border-radius: 15px" ></td>
+                        <td><%= house.price %></td>
+                        <td>
+                            <a href="#" class="btn waves-effect waves-light turquoise" style="border-radius: 12px">Update</a>
+                            <a href="#" class="btn waves-effect waves-light red" style="border-radius: 12px">Delete</a>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        
+        
+    <% } %>
+
+    

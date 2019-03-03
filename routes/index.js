@@ -16,7 +16,6 @@ router.get('/cart', (req, res)=>{
     if(!req.session.cart){
         return res.render('cart', { houses: null });
     }
-    
     var cart = new Cart(req.session.cart.items);
     res.render('cart', { houses: cart.generateArray(), totalPrice: cart.totalPrice });
 })
@@ -47,8 +46,33 @@ router.get('/checkout', (req, res)=>{
 
     let price = numberWithCommas(cart.totalPrice);
     let totalPrice = price.concat('.00');
-
-
-    res.render('checkout', {total: totalPrice})
+    let errMsg = req.flash('error')[0];
+    res.render('checkout', {total: totalPrice, errMsg, noError: !errMsg})
 });
+
+router.post('/checkout', (req, res, next)=>{
+
+    if (!req.session.cart) {
+        return res.redirect('/cart');
+    }
+
+    let cart = new Cart(req.session.cart.items);
+
+    var stripe = require("stripe")("sk_test_lwVK1we4zIKVJMSBqmXMO4b1");
+
+    stripe.charges.create({
+        amount: cart.totalPrice,
+        currency: "ngn",
+        source: "tok_visa", 
+        description: "Testing"
+    }, function(err, charge) {
+            if (err) {
+                req.flash('error', err.message);
+                return res.redirect('/checkout');
+            }
+            req.flash('success', 'Successfully bought product!');
+            req.session.destroy();
+            res.redirect('/cart');
+    });
+})
 module.exports = router;

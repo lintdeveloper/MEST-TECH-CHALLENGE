@@ -3,7 +3,8 @@ const express = require('express'),
       bcrypt = require('bcryptjs'),
       passport = require('passport'),
       {ensureAuthenticated} = require('../config/auth');
-      User = require('../models/user');
+      User = require('../models/user'),
+      { House } = require('../models/house');;
 
 router.get('/register', (req, res)=>{
   res.render('user/register');
@@ -91,6 +92,8 @@ router.get('/logout', (req, res)=>{
 
 router.get('/dashboard', ensureAuthenticated, (req, res)=>{
     const user = req.user;
-    return res.render('user/dashboard', {user: user});
+  House.find().then((houses) => {
+    res.render("user/dashboard", { houses: houses, user: user });
+  });
 })
 module.exports = router;
