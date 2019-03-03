@@ -5,14 +5,17 @@
         </a>
         <ul class="right">
             <li><a href="/dashboard" class="hide-on-small-only waves-effect">Dashboard</a></li>
-            <% if(!(user.email === "musa@gmail.com")){ %>
+            <% if((user.email === "musa@gmail.com")){ %>
+                <li><a href="/houses/new"> <span style="font-size:2.5rem">+</span></a></li>
+                <% } else { %>
+                <li><a href="/houses" class="hide-on-small-only waves-effect">Browse homes</a></li>
                 <li><a href="/cart" class="btn hide-on-small-only waves-effect"><span style="color:turquoise">
                             MY CART
-                            <%if(typeof session.cart === "undefined"){ %>
+                            <% if(typeof session.cart === "undefined"){ %>
                             0
-                            <%} else {%>
+                            <% } else {%>
                             <%= session.cart.totalQty %>
-                            <%}%>
+                            <% }%>
                     </a>
                 </li>
             <% } %>
@@ -33,8 +36,6 @@
                             <i class="icon ion-android-star"></i>
                             <i class="icon ion-android-star"></i>
                             <i class="icon ion-android-star"></i>
-                            <i class="icon ion-android-star-half"></i>
-                            <i class="icon ion-android-star-outline"></i>
                         </span>
                    </a>
                 </div>
@@ -46,8 +47,13 @@
                 <!--<p><a href="#">This is a link</a></p>-->
             </div>
             <div class="card-action">
-                <a href="/add-to-cart/<%= house._id %>" class="like waves-effect pink-text text-darken-2"><i
-                        class="icon ion-android-favorite left"></i></a>
+               <% if (!(user.email === "musa@gmail.com")){ %>
+                        <a href="/add-to-cart/<%= house._id %>" class="like waves-effect pink-text text-darken-2">
+                            <i class="icon ion-android-favorite left"></i>
+                        </a>
+               <% } %>
+                <a href="/add-to-cart/<%= house._id %>" class="like waves-effect pink-text text-darken-2">
+                </a>
                 <span class="right">Starting at <b>₦<%= house.price %></b></span>
             </div>
             <div class="card-reveal">

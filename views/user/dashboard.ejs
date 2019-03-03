@@ -5,6 +5,7 @@
         </a>
         <ul class="right">
             <% if((user.email === "musa@gmail.com")){ %>
+                <li><a href="#"> <span style="font-size:0.8rem"><%= user.email %></span></a></li>
                 <li><a href="/houses/new"> <span style="font-size:2.5rem">+</span></a></li>
             <% } else { %>
                 <li><a href="/houses" class="hide-on-small-only waves-effect">Browse homes</a></li>
@@ -43,13 +44,14 @@
                         <td><img src="<%= house.picture %>" alt="house_image"  style="height:40%; width: 30%; border-radius: 15px" ></td>
                         <td><%= house.price %></td>
                         <td>
-                            <a href="#" class="btn waves-effect waves-light turquoise" style="border-radius: 12px">Update</a>
+                            <a href="/houses/<%= house._id %>/update" class="btn waves-effect waves-light turquoise" style="border-radius: 12px">Update</a>
                             <form action="/houses/delete" method="POST" style="margin-top: 15px" id="delete_form<%= index %>">
                                 <input type="hidden" name="picture_id" value="<%= house.picture_id %>">
                                 <a onclick="document.getElementById('delete_form<%= index %>').submit(); return false;" class="btn waves-effect red" style="border-radius: 12px">
                                     </i> Remove
                                 </a>
                             </form>
+                        </td>
                     </tr>
                 <% }) %>
             </tbody>

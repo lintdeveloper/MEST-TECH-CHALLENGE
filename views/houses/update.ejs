@@ -1,5 +1,31 @@
-<div class="container">
-    <form action="/houses/<%= house._id %>?_method=PUT" method="post" enctype="multipart/form-data">
+<nav class="white">
+    <div class="nav-wrapper container">
+        <a href="/" class="brand-logo left">
+            <i class="left ion ion-arrow-shrink" style="color: turquoise"></i> Byarent
+        </a>
+        <ul class="right">
+            <% if((user.email === "musa@gmail.com")){ %>
+            <li><a href="/houses/new"> <span style="font-size:2.5rem">+</span></a></li>
+            <% } else { %>
+            <li><a href="/houses" class="hide-on-small-only waves-effect">Browse homes</a></li>
+            <li><a href="/cart" class="btn hide-on-small-only waves-effect"><span style="color:turquoise">
+                        MY CART
+                        <% if(typeof session.cart === "undefined"){ %>
+                        0
+                        <% } else {%>
+                        <%= session.cart.totalQty %>
+                        <% }%>
+                </a>
+            </li>
+            <%}%>
+            
+            <li><a href="/logout" class="waves-effect" style="color:#2fb8ad">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container" style="margin-top:70px">
+    <form action="/houses/update" method="post">
         <div class="form-group">
             <label>Item Name</label>
             <input type="text" name="item_name" value="<%= house.item_name %>" class="form-control">
@@ -12,10 +38,12 @@
             <label>Price</label>
             <input type="number" name="price" value="<%= house.price %>" class="form-control">
         </div>
-        <div class="form-group">
-            <label>Picture</label>
-            <input type="file" class="form-control" name="picture" value="<%= house.picture %>" accept="image/*" required>
+        <div class="field">
+            <label>Rename Picture ID</label>
+            <input name="picture_id" type="text" placeholder="picture_id" value="<%= house.picture_id %>" />
         </div>
+        <input type="hidden" value="<%= house.picture %>" name="image">
+        <input type="hidden" value="<%= house.picture_id %>" name="old_id">
         <button>Submit</button>
     </form>
 </div>
