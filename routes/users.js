@@ -91,7 +91,7 @@ router.get('/logout', (req, res)=>{
 })
 
 router.get('/dashboard', ensureAuthenticated, (req, res)=>{
-    const user = req.user;
+  const user = req.user;
   House.find().then((houses) => {
     res.render("user/dashboard", { houses: houses, user: user });
   });

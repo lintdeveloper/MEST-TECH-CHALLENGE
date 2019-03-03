@@ -81,7 +81,8 @@ router.post('/', multipartMiddleware, ensureAuthenticated, (req, res)=>{
                     usermail: req.user.email
                 },
                 price: req.body.price,
-                picture: result.url
+                picture: result.url,
+                picture_id: result.public_id
             });
 
             house.save().then((doc) => {

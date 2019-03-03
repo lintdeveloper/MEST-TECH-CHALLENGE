@@ -25,6 +25,12 @@ const HouseSchema = new Schema({
         minlength: 1,
         trim: true
     }, 
+    picture_id: {
+        type: String,
+        trim: true,
+        minlength: 1,
+        required: true
+    },
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
