@@ -31,33 +31,7 @@ router.post('/delete', ensureAuthenticated, controller.delete);
 
 
 /** POST /houses */
-router.post('/', multipartMiddleware, ensureAuthenticated, (req, res)=>{
-    let picturePath = req.files.picture.path;
-    cloudinary.v2.uploader.upload(picturePath, { width: 300, height: 300, crop: "limit", tags: req.body.tags, moderation: "manual", timeout: 60000 }, (err, result)=>{
-            if (err) {
-                console.log(err);
-            }
-
-            let house = new House({
-                item_name: req.body.item_name,
-                description: req.body.description,
-                author: {
-                    id: req.user._id,
-                    usermail: req.user.email
-                },
-                price: req.body.price,
-                picture: result.url,
-                picture_id: result.public_id
-            });
-
-            house.save().then((doc) => {
-                console.log(doc);
-                res.redirect('/houses');                
-            }, (e) => {
-                res.status(400).send(e);
-            });
-         });
-});
+router.post('/', multipartMiddleware, ensureAuthenticated, controller.postHouse);
 
 
 module.exports = router;
