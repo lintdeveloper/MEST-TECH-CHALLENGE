@@ -60,6 +60,8 @@ router.post('/checkout', (req, res, next)=>{
 
     var stripe = require("stripe")("sk_test_lwVK1we4zIKVJMSBqmXMO4b1");
 
+    console.log(cart.totalPrice);
+    
     stripe.charges.create({
         amount: cart.totalPrice,
         currency: "ngn",
