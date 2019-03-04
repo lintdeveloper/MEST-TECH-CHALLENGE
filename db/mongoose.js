@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const url = 'mongodb://localhost/ShoppingApp'
+const url = 'mongodb://user1:user123@ds149732.mlab.com:49732/trippe_live'
 mongoose.Promise = global.Promise;
 
 // Setup DB Connetion
