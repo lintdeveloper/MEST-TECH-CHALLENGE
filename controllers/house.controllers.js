@@ -1,5 +1,6 @@
 /* Models */
-const { House } = require('../models/house');
+const { House } = require('../models/house'),
+    cloudinary = require('cloudinary');
 
 module.exports = {
     index: (req, res) => {
