@@ -3,70 +3,31 @@ const express = require('express'),
       multipart = require('connect-multiparty'),
       multipartMiddleware = multipart(),
       cloudinary = require('cloudinary'),
-      {ensureAuthenticated} = require('../config/auth');;
+      {ensureAuthenticated} = require('../config/auth');
+      controller = require('../controllers/house.controllers')
 
 /* Models */
 const { House } = require('../models/house');
 
 /* GET /houses */
-router.get('/', function (req, res) {
-    House.find().then((houses)=>{
-        res.render("houses/index", {houses: houses, user: req.user});
-    });
-});
+router.get('/', controller.index);
 
 /** GET /houses/new  */
-router.get("/new", ensureAuthenticated, (req, res)=>{
-    let user = req.user;
-    res.render('houses/new', {user: user});
-});
+router.get("/new", ensureAuthenticated, controller.new);
 
 /** GET /houses/:id */
-router.get('/:id', (req, res)=>{
-    House.findById(req.params.id).then((house)=>{
-        res.json(house)
-    })
-});
+router.get('/:id', controller.id);
 
 /** GET /houses/update */
-router.get('/:id/update', ensureAuthenticated, (req, res)=>{
-    let id = req.params.id;
-    console.log(req.user);
-    
-    House.find({_id: id}, (err, houses)=>{  
-        res.render('houses/update', {house: houses[0], user: req.user})
-    });
-});
+router.get('/:id/update', ensureAuthenticated, controller.update);
 
 /** Updates the route /houses/:id */
-router.post('/update', ensureAuthenticated, (req, res)=>{
-    let oldName = req.body.old_id,
-        newName = req.body.picture_id;
-        
-    cloudinary.v2.uploader.rename(oldName, newName,
-        (error, result) => {
-            if (error) res.send(error);
-            House.findOneAndUpdate({ picture_id: oldName },
-                Object.assign({}, req.body, { picture: result.url }),
-                function (err) {
-                    if (err) res.send(err);
-                    res.redirect('/dashboard');
-            })
-        })
-});
+router.post('/update', ensureAuthenticated, controller.postUpdate);
 
 /** GET /houses */
 
 /** DELETE /houses/:id */
-router.post('/delete', ensureAuthenticated, (req, res)=>{
-    let pictureId = req.body.picture_id;
-    cloudinary.v2.uploader.destroy(pictureId, (error, result) => {
-        House.findOneAndDelete({ picture_id: pictureId }, (err) => {
-            if (err) res.send(err);
-            res.redirect('/dashboard');
-        });
-    });
-});
+router.post('/delete', ensureAuthenticated, controller.delete);
 
 
 /** POST /houses */
