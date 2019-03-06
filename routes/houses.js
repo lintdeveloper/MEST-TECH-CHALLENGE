@@ -2,7 +2,6 @@ const express = require('express'),
       router = express.Router(),
       multipart = require('connect-multiparty'),
       multipartMiddleware = multipart(),
-      cloudinary = require('cloudinary'),
       {ensureAuthenticated} = require('../config/auth');
       controller = require('../controllers/house.controllers')
 
